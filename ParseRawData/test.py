@@ -4,6 +4,10 @@ import time
 from lxml import objectify
 import sys
 import re
+import json
+
+# my tcx parser
+import parse_tcx
 
 namespace = 'http://www.garmin.com/xmlschemas/TrainingCenterDatabase/v2'
 
@@ -68,5 +72,24 @@ data = './SampleData/run-20160624T055729.tcx'
 
 istream = open('./SampleData/run-20160624T055729.tcx','r')
 
-# read xml contents
-points = parsetcx(istream)
+# # read xml contents
+# points = parsetcx(istream)
+
+# test for parse_tcx class
+tcx = parse_tcx.TcxParser('./SampleData/run-20160624T055729.tcx')
+
+print "Activity Type: " + tcx.activity_type
+print "Duration: " + str(tcx.duration)
+print "Complete at: " + tcx.finish_time
+print "Distance: " + str(tcx.distance)
+print "Distance Unit: " + tcx.distance_unit
+
+# Writing JSON data
+with open('hrRate_Data.json', 'w') as f:
+     json.dump(tcx.lst_hrData, f)
+
+with open('position_Data.json', 'w') as f:
+     json.dump(tcx.lst_posData, f)
+
+with open('altitude_Data.json', 'w') as f:
+     json.dump(tcx.lst_altData, f)
