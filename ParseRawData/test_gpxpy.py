@@ -5,16 +5,35 @@
 import gpxpy
 import matplotlib.pyplot as plt
 
-import time
-from lxml import objectify
+# import time
+# from lxml import objectify
 
 # my parser
-import parse_gpx
+# import parse_gpx
 
-# gpx_file = open('./SampleData/run-20160624T055729.gpx', 'r')
-# gpx = gpxpy.parse(gpx_file)
+gpx_file = open('./SampleData/run-20160624T055729.gpx', 'r')
 
-gpx = parse_gpx.GpxParser('./SampleData/run-20160624T055729.gpx')
+def readgpx(file):
+    gpx = gpxpy.parse(file)
+    mv = gpx.get_moving_data()
+    dat= {'moving_time':mv.moving_time,'stopped_time':mv.stopped_time,'moving_distance':mv.moving_distance,'stopped_distance':mv.stopped_distance,'max_speed':mv.max_speed}
+    dat['total_duration']=(gpx.get_duration())
+    dat['id']=str(gpx_file)
+    updown=gpx.get_uphill_downhill()
+    dat['uphill']=(updown.uphill)
+    dat['downhill']=(updown.downhill)
+    timebound=gpx.get_time_bounds()
+    dat['start_time']=(timebound.start_time)
+    dat['end_time']=(timebound.end_time)
+    p=gpx.get_points_data()[0]
+    # start point
+    dat['lat']=p.point.latitude
+    dat['lng']=p.point.longitude
+
+    return dat
+
+data = readgpx(gpx_file)
+# gpx = parse_gpx.GpxParser('./SampleData/run-20160624T055729.gpx')
 
 
 # tree = objectify.parse('./SampleData/run-20160624T055729.gpx')
@@ -31,4 +50,4 @@ gpx = parse_gpx.GpxParser('./SampleData/run-20160624T055729.gpx')
 
 #         positions[timestamp] = (lat,lon, alt)
 
-pos = gpx.allPositionData
+# pos = gpx.allPositionData
