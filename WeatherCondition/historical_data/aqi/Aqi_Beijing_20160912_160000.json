@@ -1,0 +1,18 @@
+{
+    "pm2_5": 85,
+    "city": "Beijing",
+    "co": 6,
+    "temp": 26,
+    "pm10": 49,
+    "aqivalue": 85,
+    "humidity": 54,
+    "pressure": 1016,
+    "so2": 2,
+    "dew": 16,
+    "wind": 2,
+    "time": "160000",
+    "date": "20160912",
+    "aqilevel": "Moderate",
+    "o3": 54,
+    "no2": 15
+}
