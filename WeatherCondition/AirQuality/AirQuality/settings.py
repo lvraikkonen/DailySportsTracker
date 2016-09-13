@@ -70,6 +70,11 @@ ITEM_PIPELINES = {
 }
 LOG_LEVEL = 'INFO'
 
+MONGODB_SERVER = "localhost"
+MONGODB_PORT = 27017
+MONGODB_DB = "aqihistoricaldata"
+MONGODB_COLLECTION = "aqidata"
+
 # Enable and configure the AutoThrottle extension (disabled by default)
 # See http://doc.scrapy.org/en/latest/topics/autothrottle.html
 #AUTOTHROTTLE_ENABLED = True
