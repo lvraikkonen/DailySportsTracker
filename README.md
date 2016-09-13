@@ -9,8 +9,7 @@
 
 - Get weather data from [wunderground API](https://www.wunderground.com/weather/api)
 - Crawl Air Aqulity data from [Real-time Air Quality Index](http://aqicn.org/city/beijing/)
-
-next: (daily crawl and save result into mysql DB or mongodb)
+- Daily crawl and save result into mongodb
 
 ## Visualization
 
