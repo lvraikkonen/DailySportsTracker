@@ -1,0 +1,19 @@
+{
+    "pm2_5": 159,
+    "city": "Beijing",
+    "co": 10,
+    "pm10": 87,
+    "hour": 13,
+    "aqivalue": 159,
+    "humidity": 67,
+    "pressure": 1016,
+    "so2": 5,
+    "dew": 20,
+    "temp": 27,
+    "date": "20160914",
+    "wind": 2,
+    "aqilevel": "Unhealthy",
+    "o3": 80,
+    "no2": 13,
+    "crawl_time": "2016-09-14 13:57:29"
+}

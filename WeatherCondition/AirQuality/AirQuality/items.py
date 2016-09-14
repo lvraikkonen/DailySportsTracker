@@ -10,7 +10,7 @@ import scrapy
 
 class AirqualityItem(scrapy.Item):
     date = scrapy.Field()
-    time = scrapy.Field()
+    hour = scrapy.Field()
     city = scrapy.Field()
     # area = scrapy.Field()
     aqivalue = scrapy.Field()
@@ -26,3 +26,6 @@ class AirqualityItem(scrapy.Item):
     pressure = scrapy.Field()
     humidity = scrapy.Field()
     wind = scrapy.Field()
+
+    # add field to log spider crawl time
+    crawl_time = scrapy.Field()

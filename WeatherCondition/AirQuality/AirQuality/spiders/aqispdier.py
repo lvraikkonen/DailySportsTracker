@@ -24,7 +24,11 @@ class AirQualitySpider(CrawlSpider):
         #     f.write(response.body)
 
         sel = Selector(response)
-        secondsDiff = long(float(sel.xpath('//*[@id="aqiwgtutime"]/@val').extract()[0]))
+
+        cur_time = time.time()
+        cur_time = time.strftime(ISOTIMEFORMAT, time.localtime(cur_time))
+
+        secondsDiff = long(float(sel.xpath('//*[@id="aqiwgtutime"]/@val').extract()[0])) + 60*60  # upt + 60 minutes
         updatetime = time.strftime(ISOTIMEFORMAT, time.localtime(secondsDiff))
         # parse str into datetime
         updatetime = parser.parse(updatetime)
@@ -47,7 +51,7 @@ class AirQualitySpider(CrawlSpider):
 
         item = AirqualityItem()
         item['date'] = updatetime.strftime("%Y%m%d")
-        item['time'] = updatetime.strftime("%H%M%S")
+        item['hour'] = updatetime.hour # strftime("%H%M%S")
         item['city'] = city
         item['aqivalue'] = aqivalue
         item['aqilevel'] = aqilevel
@@ -62,5 +66,6 @@ class AirQualitySpider(CrawlSpider):
         item['pressure'] = pressure
         item['humidity'] = humidity
         item['wind'] = wind
+        item['crawl_time'] = cur_time
 
         return item
