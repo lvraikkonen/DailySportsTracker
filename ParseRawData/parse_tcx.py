@@ -159,19 +159,20 @@ class TcxParser:
         time_distance_HR = []
         activity = self.root.Activities.Activity
         for lap in activity.Lap:
-            for point in lap.Track.Trackpoint:
-                # timestamp
-                timestamp = point.Time.text
-                # cummulative distance
-                dist = point.DistanceMeters.pyval
-                # heart rate
-                has_HRAttr = hasattr(point,'HeartRateBpm')
-                if has_HRAttr:
-                    heart = int(point.HeartRateBpm.Value)
-                else:
-                    heart = None
-                
-                time_distance_HR.append((timestamp, dist, heart))
+            for track in lap.Track:
+                for point in track.Trackpoint:
+                    # timestamp
+                    timestamp = point.Time.text
+                    # cummulative distance
+                    dist = point.DistanceMeters.pyval
+                    # heart rate
+                    has_HRAttr = hasattr(point,'HeartRateBpm')
+                    if has_HRAttr:
+                        heart = int(point.HeartRateBpm.Value)
+                    else:
+                        heart = None
+                    
+                    time_distance_HR.append((timestamp, dist, heart))
         return time_distance_HR
 
     # get all (time, distance, (latitude, longitude)) for each trackpoint
@@ -179,16 +180,17 @@ class TcxParser:
         time_distance_position = []
         activity = self.root.Activities.Activity
         for lap in activity.Lap:
-            for point in lap.Track.Trackpoint:
-                # timestamp
-                timestamp = point.Time.text
-                # cummulative distance
-                dist = point.DistanceMeters.pyval
-                # (latitude, longtitude)
-                lat = point.Position.LatitudeDegrees.pyval
-                lon = point.Position.LongitudeDegrees.pyval
+            for track in lap.Track:
+                for point in track.Trackpoint:
+                    # timestamp
+                    timestamp = point.Time.text
+                    # cummulative distance
+                    dist = point.DistanceMeters.pyval
+                    # (latitude, longtitude)
+                    lat = point.Position.LatitudeDegrees.pyval
+                    lon = point.Position.LongitudeDegrees.pyval
 
-                time_distance_position.append((timestamp, dist, (lat, lon)))
+                    time_distance_position.append((timestamp, dist, (lat, lon)))
         return time_distance_position
 
     # get all (time, distance, altitude) for each trackpoint
@@ -196,16 +198,17 @@ class TcxParser:
         time_distance_alt = []
         activity = self.root.Activities.Activity
         for lap in activity.Lap:
-            for point in lap.Track.Trackpoint:
-                # timestamp
-                timestamp = point.Time.text
-                # cummulative distance
-                dist = point.DistanceMeters.pyval
+            for track in lap.Track:
+                for point in track.Trackpoint:
+                    # timestamp
+                    timestamp = point.Time.text
+                    # cummulative distance
+                    dist = point.DistanceMeters.pyval
 
-                # altitude
-                alt = float(point.AltitudeMeters)
+                    # altitude
+                    alt = float(point.AltitudeMeters)
 
-                time_distance_alt.append((timestamp, dist, alt))
+                    time_distance_alt.append((timestamp, dist, alt))
         return time_distance_alt
     
     # get all (time, distance, pace) for each trackpoint
