@@ -14,3 +14,5 @@
 ## Visualization
 
 - Simply Show GPX Position by matplotlib
+- Plot HeartRate vs. Distance using matplotlib
+- Show training statistic in Dashboard using d3.js, dc.js, leafet.js, etc.
