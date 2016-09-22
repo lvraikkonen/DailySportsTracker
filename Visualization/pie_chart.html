@@ -1,0 +1,82 @@
+<html> 
+  <head> 
+        <meta charset="utf-8"> 
+        <title>Pie Chart</title> 
+        <style>   
+            .axis path,
+            .axis line{
+                fill: none;
+                stroke: black;
+                shape-rendering: crispEdges;
+            }
+
+            .axis text {
+                font-family: sans-serif;
+                font-size: 11px;
+            }
+
+            .MyRect {
+                fill: steelblue;
+            }
+
+            .MyText {
+                fill: white;
+                text-anchor: middle;
+            }
+        </style>
+  </head> 
+    <body>
+        <p id="ap" class="myclass">Apple</p>
+        <p id="pe">Pear</p>
+        <p id="ba" class="myclass">Banana</p>
+        
+        <script src="http://d3js.org/d3.v3.min.js" charset="utf-8"></script>
+        <script>
+            var width = 400;
+            var height = 400;
+            var dataset = [ 30 , 10 , 43 , 55 , 13 ];
+            
+            var svg = d3.select("body")
+                        .append("svg")
+                        .attr("width", width)
+                        .attr("height", height);
+
+            var dataset = [ 30 , 10 , 43 , 55 , 13 ];
+            var pie = d3.layout.pie();
+            var piedata = pie(dataset);
+
+            var outerRadius = 150; //外半径
+            var innerRadius = 30;  //内半径
+
+            var color = d3.scale.category10();   //有十种颜色的颜色比例尺
+
+            // 弧生成器
+            var arc = d3.svg.arc()
+                        .innerRadius(innerRadius)
+                        .outerRadius(outerRadius);
+            // 添加图形元素
+            var arcs = svg.selectAll("g")
+                          .data(piedata)
+                          .enter()
+                          .append("g")
+                          .attr("transform", "translate("+(width/2) + "," + (width/2)+ ")");
+            arcs.append("path")
+                .attr("fill", function(d, i){
+                    return color(i);
+                })
+                .attr("d", function(d){
+                    return arc(d); //调用弧生成器，得到路径值
+                });
+            arcs.append("text")
+                .attr("transform", function(d){
+                    return "translate(" + arc.centroid(d) + ")";
+                })
+                .attr("text-anchor", "middle")
+                .text(function(d){
+                    return d.data;
+                })
+            
+            console.log(piedata);
+        </script>
+    </body>
+</html>
