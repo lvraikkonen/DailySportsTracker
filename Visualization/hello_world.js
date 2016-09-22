@@ -49,3 +49,33 @@ var svg = d3.select("body")
             .append("svg")
             .attr("width", width)
             .attr("height", height);
+var rectHeight = 25;
+svg.selectAll("rect")
+   .data(dataset)
+   .enter()
+   .append("rect")
+   .attr("x", 20) //矩形左上角的 x 坐标
+   .attr("y", function(d, i){
+       return i * rectHeight;//矩形左上角的 y 坐标
+       })
+   .attr("width", function(d, i){
+       return d;//矩形的宽度
+       })
+   .attr("height", rectHeight-3)//矩形的高度
+   .attr("fill", "steelblue");
+
+var dataset = [ 250 , 270 , 120 , 190 , 90 ];
+var min = d3.min(dataset);
+var max = d3.max(dataset);
+// 比例尺
+var linear = d3.scale.linear()//线性比例尺
+               .domain([min, max])//定义域
+               .range([0,300]);//值域
+console.log(linear(20));
+
+var index = [0, 1, 2, 3, 4];
+var color = ["red", "blue", "green", "yellow", "black"];
+var ordinal = d3.scale.ordinal()//序数比例尺
+                .domain(index)//值域
+                .range(color);
+console.log(ordinal(2))
