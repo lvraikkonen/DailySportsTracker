@@ -1,7 +1,7 @@
 <html> 
   <head> 
         <meta charset="utf-8"> 
-        <title>HelloWorld</title> 
+        <title>Bar Chart</title> 
         <style>   
             .axis path,
             .axis line{
@@ -73,22 +73,37 @@
 
             //添加矩形元素
             var rects = svg.selectAll(".MyRect")
-                .data(dataset)
-                .enter()
-                .append("rect")
-                .attr("class","MyRect")
+                .data(dataset) // 绑定数据
+                .enter()       // 为缺失元素返回占位符
+                .append("rect")// 添加rect元素
+                .attr("class","MyRect")// 设置属性
                 .attr("transform","translate(" + padding.left + "," + padding.top + ")")
-                .attr("x", function(d,i){
+                .attr("x", function(d, i){
                     return xScale(i) + rectPadding/2; //矩形左上角的 x 坐标
                 })
+                .attr("width", xScale.rangeBand() - rectPadding ) //矩形的宽度
+                //矩形高度变幻
+                .attr("y", function(d){
+                    var min = yScale.domain()[0];
+                    return yScale(min);
+                })
+                .attr("height", function(d){
+                    return 0;
+                })
+                .transition()
+                .delay(function(d, i){
+                    return i * 200;
+                })
+                .duration(2000)
+                .ease("bounce")
                 .attr("y",function(d){
                     return yScale(d); //矩形左上角的 y 坐标
                 })
-                .attr("width", xScale.rangeBand() - rectPadding ) //矩形的宽度
+
                 .attr("height", function(d){
                     return height - padding.top - padding.bottom - yScale(d); //矩形的高度
                 })
-                .attr("fill", "steelblue");
+                .attr("fill","steelblue");
 
             //添加文字元素
             var texts = svg.selectAll(".MyText")
@@ -97,11 +112,8 @@
                            .append("text")
                            .attr("class","MyText")
                            .attr("transform","translate(" + padding.left + "," + padding.top + ")")
-                           .attr("x", function(d,i){
+                           .attr("x", function(d, i){
                                return xScale(i) + rectPadding/2;
-                               })
-                           .attr("y",function(d){
-                               return yScale(d);
                                })
                            .attr("dx",function(){
                                return (xScale.rangeBand() - rectPadding)/2;
@@ -111,13 +123,28 @@
                                })
                            .text(function(d){
                                return d;
-                               });
+                               })
+                           // y坐标初始位置
+                           .attr("y", function(d){
+                               min = yScale.domain()[0];
+                               return yScale(min);
+                           })
+                           .transition()
+                           .delay(function(d, i){
+                               return i * 200;
+                            })
+                           .duration(2000)
+                           .ease("bounce")
+                           // y 坐标最终位置
+                           .attr("y",function(d){
+                               return yScale(d);
+                            });
             
             //添加x轴
             svg.append("g")
                .attr("class","axis")
                .attr("transform","translate(" + padding.left + "," + (height - padding.bottom) + ")")
-               .call(xAxis);
+               .call(xAxis); //为当前选择调用一个函数
 
             //添加y轴
             svg.append("g")
